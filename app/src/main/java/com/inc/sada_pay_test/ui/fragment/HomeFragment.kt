@@ -6,15 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import com.inc.sada_pay_test.R
 import com.inc.sada_pay_test.databinding.FragmentHomeBinding
 import com.inc.sada_pay_test.viewmodel.ToolbarViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-//@AndroidEntryPoint
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
+    private val viewModel by viewModels<HomeViewModel>()
 
     lateinit var binding: FragmentHomeBinding
 
@@ -38,7 +40,8 @@ class HomeFragment : Fragment() {
         init()
     }
 
-    fun init() {
+    private fun init() {
+        viewModel.fetchRepositories()
     }
 
 
