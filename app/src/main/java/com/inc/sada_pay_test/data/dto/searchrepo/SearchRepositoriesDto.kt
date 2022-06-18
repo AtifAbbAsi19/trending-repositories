@@ -1,14 +1,13 @@
-package com.inc.sada_pay_test.model.searchrepo
+package com.inc.sada_pay_test.data.dto.searchrepo
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import com.inc.sada_pay_test.model.reposotryitem.RepositoryItem
+import com.inc.sada_pay_test.data.model.reposotryitem.RepositoryItem
 import kotlinx.parcelize.Parcelize
-import org.json.JSONObject
 
 
 @Parcelize
-data class SearchRepositioriesDto(
+data class SearchRepositoriesDto(
 
 	@field:SerializedName("total_count")
 	val totalCount: Int? = null,
