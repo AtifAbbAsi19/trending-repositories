@@ -2,6 +2,7 @@ package com.inc.sada_pay_test.model.searchrepo
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import com.inc.sada_pay_test.model.reposotryitem.RepositoryItem
 import kotlinx.parcelize.Parcelize
 import org.json.JSONObject
 
@@ -17,7 +18,20 @@ data class SearchRepositioriesDto(
 
 	@field:SerializedName("items")
 	val items: List<ItemsItem?>? = null
-) : Parcelable
+) : Parcelable{
+
+
+
+	fun toRepositoryItem() : RepositoryItem{
+
+		return RepositoryItem(
+			totalCount = this.totalCount
+		)
+
+	}
+
+
+}
 
 @Parcelize
 data class ItemsItem(

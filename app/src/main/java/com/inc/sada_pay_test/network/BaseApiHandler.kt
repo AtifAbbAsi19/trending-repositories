@@ -13,11 +13,11 @@ fun <T> baseApiResultHandler(call: suspend () -> Response<T>): Flow<ApiState<T?>
 
     try {
 
-        val call_ = call()
-        if (call_.isSuccessful) {
-            emit(ApiState.Success(call_.body()))
+        val response = call()
+        if (response.isSuccessful) {
+            emit(ApiState.Success(response.body()))
         } else {
-            call_.errorBody().let { error ->
+            response.errorBody().let { error ->
                 error?.close()
                 emit(ApiState.Failure(error.toString()))
             }

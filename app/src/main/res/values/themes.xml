@@ -22,4 +22,24 @@
       <!--  <item name="cornerSize">50%</item>-->
     </style>
 
+
+
+    <style name="retry_button" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="shapeAppearanceOverlay">@style/MyShapeAppearance</item>
+    </style>
+
+    <style name="MyShapeAppearance" parent="">
+        <item name="cornerFamilyTopLeft">rounded</item>
+        <item name="cornerFamilyBottomLeft">rounded</item>
+        <item name="cornerFamilyTopRight">cut</item>
+        <item name="cornerFamilyBottomRight">cut</item>
+        <item name="android:padding">4dp</item>
+        <item name="cornerSize">4dp</item>
+        <item name="android:textColor">@android:color/holo_green_light</item>
+
+
+    </style>
+
+
+
 </resources>

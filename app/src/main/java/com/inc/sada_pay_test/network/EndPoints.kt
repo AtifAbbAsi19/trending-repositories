@@ -6,7 +6,8 @@ interface EndPoints {
     companion object {
 
         const val REPOSITIORIES_URL =
-            "https://api.github.com/search/repositories?q=language=+sort:stars"
+            "search/repositories?q=language=+sort:stars"
+          //  "https://api.github.com/search/repositories?q=language=+sort:stars"
 
     }
 
