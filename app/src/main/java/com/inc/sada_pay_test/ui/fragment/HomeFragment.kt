@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.inc.sada_pay_test.R
 import com.inc.sada_pay_test.databinding.FragmentHomeBinding
@@ -17,6 +18,7 @@ import javax.inject.Inject
 class HomeFragment : Fragment() {
 
     private val viewModel by viewModels<HomeViewModel>()
+    //private val sharedViewModel by activityViewModels<HomeViewModel>() //for shared view model
 
     lateinit var binding: FragmentHomeBinding
 

@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import com.inc.sada_pay_test.R
 import com.inc.sada_pay_test.databinding.ActivityMainBinding
+import com.inc.sada_pay_test.ui.fragment.HomeViewModel
 import com.inc.sada_pay_test.viewmodel.ToolbarViewModel
 import dagger.hilt.EntryPoint
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,6 +22,8 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
 
+   // private val viewModel: HomeViewModel by viewModels() //for shared view model
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // setContentView(R.layout.activity_main)
@@ -28,8 +32,6 @@ class MainActivity : AppCompatActivity() {
         binding.toolbarViewModel = toolbarViewModel
         binding.lifecycleOwner = this
         init()
-
-
     }
 
     private fun init() {
@@ -41,40 +43,34 @@ class MainActivity : AppCompatActivity() {
         //return super.onCreateOptionsMenu(menu)
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
-
     }
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-        when (item.itemId) {
+        return when (item.itemId) {
 
             R.id.refresh_btn -> {
-                return true
+               // viewModel.fetchRepositories()
+                true
             }
 
             R.id.dark_theme_btn -> {
                 item.isChecked = !item.isChecked
-                return true
+                true
             }
             else -> {
-                return super.onOptionsItemSelected(item)
+                super.onOptionsItemSelected(item)
             }
-
         }
-
     }
 
 
     override fun onDestroy() {
-
         if (::binding.isInitialized) {
             binding.unbind()
         }
-
         super.onDestroy()
-
-
     }
 
 }

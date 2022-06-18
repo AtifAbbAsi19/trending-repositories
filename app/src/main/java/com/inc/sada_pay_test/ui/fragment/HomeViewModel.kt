@@ -44,4 +44,10 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+
+    override fun onCleared() {
+        super.onCleared()
+
+    }
+
 }
