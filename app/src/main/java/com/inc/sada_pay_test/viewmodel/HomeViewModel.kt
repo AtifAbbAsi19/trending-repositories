@@ -1,11 +1,11 @@
-package com.inc.sada_pay_test.ui.fragment
+package com.inc.sada_pay_test.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.inc.sada_pay_test.network.networkstates.ApiState
+import com.inc.sada_pay_test.ui.fragment.HomeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

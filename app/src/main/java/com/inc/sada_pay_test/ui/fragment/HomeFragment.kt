@@ -6,13 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.activityViewModels
+import androidx.databinding.library.baseAdapters.BR
 import androidx.fragment.app.viewModels
 import com.inc.sada_pay_test.R
 import com.inc.sada_pay_test.databinding.FragmentHomeBinding
-import com.inc.sada_pay_test.viewmodel.ToolbarViewModel
+import com.inc.sada_pay_test.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -29,6 +28,7 @@ class HomeFragment : Fragment() {
 
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+       // binding.setVariable(BR.viewModel,viewModel)
 
 
         // Inflate the layout for this fragment

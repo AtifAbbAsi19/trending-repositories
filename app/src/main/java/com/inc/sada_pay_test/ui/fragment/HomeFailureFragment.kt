@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import com.inc.sada_pay_test.R
 import com.inc.sada_pay_test.databinding.FragmentHomeFailureBinding
+import com.inc.sada_pay_test.viewmodel.HomeViewModel
 
 
 class HomeFailureFragment : Fragment() {

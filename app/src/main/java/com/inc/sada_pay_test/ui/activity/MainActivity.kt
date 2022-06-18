@@ -4,14 +4,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.NavHostFragment
 import com.inc.sada_pay_test.R
 import com.inc.sada_pay_test.databinding.ActivityMainBinding
-import com.inc.sada_pay_test.ui.fragment.HomeViewModel
 import com.inc.sada_pay_test.viewmodel.ToolbarViewModel
-import dagger.hilt.EntryPoint
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
