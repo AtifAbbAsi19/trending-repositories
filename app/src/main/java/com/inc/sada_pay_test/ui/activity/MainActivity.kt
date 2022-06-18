@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.NavHostFragment
 import com.inc.sada_pay_test.R
 import com.inc.sada_pay_test.databinding.ActivityMainBinding
 import com.inc.sada_pay_test.ui.fragment.HomeViewModel
@@ -22,7 +23,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
 
-   // private val viewModel: HomeViewModel by viewModels() //for shared view model
+    // private val viewModel: HomeViewModel by viewModels() //for shared view model
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +37,21 @@ class MainActivity : AppCompatActivity() {
 
     private fun init() {
         toolbarViewModel.title.postValue(getString(R.string.trending))
+
+        //setupNavigationGraph()
+    }
+
+    private fun setupNavigationGraph() {
+
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
+        val graphInflater = navHostFragment.navController.navInflater
+        val navGraph = graphInflater.inflate(R.navigation.home_nav)
+        val navController = navHostFragment.navController
+        val destination = R.id.loadingFragment
+        navGraph.setStartDestination(destination)
+        navController.graph = navGraph
+
     }
 
 
@@ -51,7 +67,7 @@ class MainActivity : AppCompatActivity() {
         return when (item.itemId) {
 
             R.id.refresh_btn -> {
-               // viewModel.fetchRepositories()
+                // viewModel.fetchRepositories()
                 true
             }
 
