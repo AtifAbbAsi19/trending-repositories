@@ -12,6 +12,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.inc.sada_pay_test.R
 import com.inc.sada_pay_test.adapter.RepositoriesAdapter
 import com.inc.sada_pay_test.data.model.reposotryitem.RepositoryItem
@@ -76,15 +77,30 @@ class HomeFragment : Fragment() {
             sharedViewModel.uiState.collect {
 
                 when (it) {
+
+                    is ApiState.Loading -> {
+                        navigateToLoadingScreen()
+                    }
+
                     is ApiState.Success -> {
 
                         updateUi(it.response)
 
                     }
+
+
                     else -> {
                     }
                 }
             }
+        }
+    }
+
+    private fun navigateToLoadingScreen() {
+
+        findNavController().apply {
+            navigate(R.id.loadingFragment)
+            backQueue.clear()
         }
     }
 
