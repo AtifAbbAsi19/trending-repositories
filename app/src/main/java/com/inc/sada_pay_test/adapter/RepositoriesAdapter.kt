@@ -1,22 +1,34 @@
 package com.inc.sada_pay_test.adapter
 
+import android.annotation.SuppressLint
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.core.text.buildSpannedString
+import androidx.core.text.inSpans
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.inc.sada_pay_test.R
-import com.inc.sada_pay_test.databinding.RepositioryItemViewBinding
 import com.inc.sada_pay_test.data.model.reposotryitem.RepositoryItem
+import com.inc.sada_pay_test.databinding.RepositioryItemViewBinding
 
-class RepositoriesAdapter(repositoryList: ArrayList<RepositoryItem>) :
+
+class RepositoriesAdapter(repositoryList: ArrayList<RepositoryItem>, val onClick: (Any) -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var repositoryList: ArrayList<RepositoryItem> = arrayListOf()
+
+    init {
+        this.repositoryList = repositoryList
+    }
 
 
     fun updateRepositoriesList(repositoryList: ArrayList<RepositoryItem>) {
         this.repositoryList = repositoryList
         notifyDataSetChanged()
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -32,7 +44,8 @@ class RepositoriesAdapter(repositoryList: ArrayList<RepositoryItem>) :
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as RepositoriesViewHolder).bind(repositoryList[position])
+        if (repositoryList.isNotEmpty())
+            (holder as RepositoriesViewHolder).bind(repositoryList[position])
     }
 
     override fun getItemCount(): Int {
@@ -44,9 +57,12 @@ class RepositoriesAdapter(repositoryList: ArrayList<RepositoryItem>) :
 
         fun bind(repositoryItem: RepositoryItem) {
 
-            //binding.setVariable(repositoryItem)
-            //binding.executePendingBindings()
+            binding.item = repositoryItem
+            binding.executePendingBindings()
 
+            binding.cardLayout.setOnClickListener {
+                onClick.invoke(repositoryItem)
+            }
 
         }
 

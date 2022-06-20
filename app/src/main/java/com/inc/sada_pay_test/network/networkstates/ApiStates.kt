@@ -2,6 +2,8 @@ package com.inc.sada_pay_test.network.networkstates
 
 sealed class ApiState<out R> {
 
+    object Idle : ApiState<Nothing>()
+
     object Loading : ApiState<Nothing>()
 
     class Failure(val msg: String) : ApiState<Nothing>()

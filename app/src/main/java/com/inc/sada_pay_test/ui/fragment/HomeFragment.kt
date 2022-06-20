@@ -1,5 +1,6 @@
 package com.inc.sada_pay_test.ui.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,17 +8,28 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.library.baseAdapters.BR
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.inc.sada_pay_test.R
+import com.inc.sada_pay_test.adapter.RepositoriesAdapter
+import com.inc.sada_pay_test.data.model.reposotryitem.RepositoryItem
 import com.inc.sada_pay_test.databinding.FragmentHomeBinding
+import com.inc.sada_pay_test.network.networkstates.ApiState
 import com.inc.sada_pay_test.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
-    private val viewModel by viewModels<HomeViewModel>()
-    //private val sharedViewModel by activityViewModels<HomeViewModel>() //for shared view model
+    //private val viewModel by viewModels<HomeViewModel>()
+    private val sharedViewModel by activityViewModels<HomeViewModel>() //for shared view model
+
+
+    lateinit var adapter: RepositoriesAdapter
 
     lateinit var binding: FragmentHomeBinding
 
@@ -28,7 +40,8 @@ class HomeFragment : Fragment() {
 
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
-       // binding.setVariable(BR.viewModel,viewModel)
+        binding.setVariable(BR.viewModel, sharedViewModel)
+        binding.lifecycleOwner = this
 
 
         // Inflate the layout for this fragment
@@ -37,13 +50,66 @@ class HomeFragment : Fragment() {
     }
 
 
+    @SuppressLint("UnsafeRepeatOnLifecycleDetector")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        init()
+
+
+        adapter = RepositoriesAdapter(arrayListOf()) {
+
+
+            if (it is RepositoryItem) {
+                sharedViewModel.updateItem(it)
+            }
+
+            //update item on expend state
+
+        }
+
+        binding.taskRecyclerview.adapter = adapter
+        binding.taskRecyclerview.hasFixedSize()
+
+        // viewModel.fetchRepositories()
+
+        // Start a coroutine in the lifecycle scope
+        lifecycleScope.launch {
+            // repeatOnLifecycle launches the block in a new coroutine every time the
+            // lifecycle is in the STARTED state (or above) and cancels it when it's STOPPED.
+            repeatOnLifecycle(Lifecycle.State.CREATED) {
+                // Trigger the flow and start listening for values.
+                // Note that this happens when lifecycle is STARTED and stops
+                // collecting when the lifecycle is STOPPED
+
+                lifecycleScope.launch {
+
+                    sharedViewModel.uiState.collect {
+
+                        when (it) {
+                            is ApiState.Success -> {
+
+                                updateUi(it.response)
+
+                            }
+                            else -> {
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
     }
 
+    private fun updateUi(response: List<RepositoryItem?>?) {
+
+        if (!response.isNullOrEmpty())
+            adapter.updateRepositoriesList(repositoryList = response as ArrayList<RepositoryItem>)
+
+    }
+
+
     private fun init() {
-        viewModel.fetchRepositories()
+        // sharedViewModel.fetchRepositories()
     }
 
 

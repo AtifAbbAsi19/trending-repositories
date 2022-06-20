@@ -8,7 +8,7 @@ import com.google.android.material.imageview.ShapeableImageView
 import com.squareup.picasso.Picasso
 
 
-fun ImageView.loadImage(url: String?) {
+fun ImageView.loadServerImage(url: String?) {
 
     if (url.isNullOrEmpty()) return
     Picasso.get()
@@ -20,7 +20,7 @@ fun ImageView.loadImage(url: String?) {
 @BindingAdapter("url")
 fun ShapeableImageView.loadImage(url: String?) {
     if (url.isNullOrEmpty()) return
-    this.loadImage(url)
+    this.loadServerImage(url)
 }
 
 

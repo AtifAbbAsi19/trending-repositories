@@ -1,13 +1,18 @@
 package com.inc.sada_pay_test.ui.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.PopupMenu
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.inc.sada_pay_test.R
 import com.inc.sada_pay_test.databinding.ActivityMainBinding
+import com.inc.sada_pay_test.viewmodel.HomeViewModel
 import com.inc.sada_pay_test.viewmodel.ToolbarViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -20,7 +25,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
 
-    // private val viewModel: HomeViewModel by viewModels() //for shared view model
+    private val viewModel: HomeViewModel by viewModels() //for shared view model
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,8 +37,15 @@ class MainActivity : AppCompatActivity() {
         init()
     }
 
+
     private fun init() {
         toolbarViewModel.title.postValue(getString(R.string.trending))
+
+
+
+        binding.appBarLayout.settingBtnToolbar.setOnClickListener {
+            showPopupMenu(it)
+        }
 
         //setupNavigationGraph()
     }
@@ -51,9 +63,20 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private fun showPopupMenu(view: View) {
+        PopupMenu(view.context, view).apply {
+            menuInflater.inflate(R.menu.menu_main, menu)
+            setOnMenuItemClickListener { item ->
+                onOptionsItemSelected(item)
+                true
+            }
+        }.show()
+    }
+
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        //return super.onCreateOptionsMenu(menu)
+        super.onCreateOptionsMenu(menu)
+        // val popup = PopupMenu(this, menu)
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
@@ -64,7 +87,7 @@ class MainActivity : AppCompatActivity() {
         return when (item.itemId) {
 
             R.id.refresh_btn -> {
-                // viewModel.fetchRepositories()
+                viewModel.fetchRepositories()
                 true
             }
 
@@ -76,6 +99,10 @@ class MainActivity : AppCompatActivity() {
                 super.onOptionsItemSelected(item)
             }
         }
+    }
+
+    override fun onBackPressed() {
+        finish()
     }
 
 
