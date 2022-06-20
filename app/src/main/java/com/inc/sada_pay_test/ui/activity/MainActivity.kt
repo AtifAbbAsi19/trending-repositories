@@ -104,8 +104,26 @@ class MainActivity : AppCompatActivity() {
 
         return true
     }
+  /*  override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
 
+        val inflater = menuInflater
+        inflater.inflate(com.inc.sada_pay_test.R.menu.menu_main, menu)
 
+        menuInflater.inflate(R.menu.menu_main, menu)
+
+        lifecycleScope.launch {
+
+            val isDarkModeEnabled = toolbarViewModel.getDarkModeSetting().first()
+
+            menu?.findItem(R.id.dark_theme_btn)?.isChecked = isDarkModeEnabled
+
+            toolbarViewModel.isDarkModeEnabled.value = isDarkModeEnabled
+        }
+
+        return true
+
+    }
+*/
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         return when (item.itemId) {
