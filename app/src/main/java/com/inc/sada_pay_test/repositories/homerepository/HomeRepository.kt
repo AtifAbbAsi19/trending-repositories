@@ -1,4 +1,4 @@
-package com.inc.sada_pay_test.ui.fragment
+package com.inc.sada_pay_test.repositories.homerepository
 
 import com.inc.sada_pay_test.network.SearchRepositioryServiceApi
 import com.inc.sada_pay_test.network.baseApiResultHandler

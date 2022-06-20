@@ -12,7 +12,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import com.inc.sada_pay_test.R
 import com.inc.sada_pay_test.adapter.RepositoriesAdapter
 import com.inc.sada_pay_test.data.model.reposotryitem.RepositoryItem
@@ -71,34 +70,24 @@ class HomeFragment : Fragment() {
 
         // viewModel.fetchRepositories()
 
-        // Start a coroutine in the lifecycle scope
+
         lifecycleScope.launch {
-            // repeatOnLifecycle launches the block in a new coroutine every time the
-            // lifecycle is in the STARTED state (or above) and cancels it when it's STOPPED.
-            repeatOnLifecycle(Lifecycle.State.CREATED) {
-                // Trigger the flow and start listening for values.
-                // Note that this happens when lifecycle is STARTED and stops
-                // collecting when the lifecycle is STOPPED
 
-                lifecycleScope.launch {
+            sharedViewModel.uiState.collect {
 
-                    sharedViewModel.uiState.collect {
+                when (it) {
+                    is ApiState.Success -> {
 
-                        when (it) {
-                            is ApiState.Success -> {
+                        updateUi(it.response)
 
-                                updateUi(it.response)
-
-                            }
-                            else -> {
-                            }
-                        }
+                    }
+                    else -> {
                     }
                 }
             }
-
         }
     }
+
 
     private fun updateUi(response: List<RepositoryItem?>?) {
 

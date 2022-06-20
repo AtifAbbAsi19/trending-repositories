@@ -10,6 +10,7 @@
         android:id="@+id/dark_theme_btn"
         app:showAsAction="never"
         android:checkable="true"
+        android:checked="false"
         android:title="@string/dark_theme" />
 
 </menu>

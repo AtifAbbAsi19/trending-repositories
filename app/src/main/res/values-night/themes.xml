@@ -36,4 +36,19 @@
 
     </style>
 
+
+    <style name="toolbarTheme">
+
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@color/light_black</item>
+    </style>
+
+    <style name="DottedImage">
+        <item name="android:tint">@color/white</item>
+    </style>
+
+    <style name="textView">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
 </resources>

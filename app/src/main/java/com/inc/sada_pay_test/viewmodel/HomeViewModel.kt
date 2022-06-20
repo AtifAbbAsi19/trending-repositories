@@ -2,20 +2,15 @@ package com.inc.sada_pay_test.viewmodel
 
 import android.util.Log
 import android.view.View
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.inc.sada_pay_test.R
-import com.inc.sada_pay_test.data.dto.searchrepo.ItemsItem
-import com.inc.sada_pay_test.data.dto.searchrepo.SearchRepositoriesDto
 import com.inc.sada_pay_test.data.model.reposotryitem.RepositoryItem
 import com.inc.sada_pay_test.network.networkstates.ApiState
-import com.inc.sada_pay_test.ui.fragment.HomeRepository
+import com.inc.sada_pay_test.repositories.homerepository.HomeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -88,6 +83,7 @@ class HomeViewModel @Inject constructor(
 
 
             it.let {
+/*
 
                 for (item in it!!) {
                     if (repositoryItem == item) {
@@ -100,10 +96,23 @@ class HomeViewModel @Inject constructor(
                 _repositoryList.value = (it)
             }
 
-            _uiState.value = ApiState.Success(_repositoryList.value)
+*/
+
+                it?.onEach {
+
+                    if (repositoryItem == it) {
+                        it.expand = View.VISIBLE
+                    } else {
+                        it?.expand = View.GONE
+                    }
+
+                }
+
+                _uiState.value = ApiState.Success(it)
+
+            }
 
         }
-
     }
 
     override fun onCleared() {

@@ -6,5 +6,6 @@ object Constants {
     val ANDROID: String ="android"
     val DEVICE_TYPE: String ="x-device"
     const val BASE_URL ="https://api.github.com/"
+    const val PREFERENCES_STORE_NAME ="setting"
 
 }

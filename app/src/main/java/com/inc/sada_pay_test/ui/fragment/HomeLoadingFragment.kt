@@ -11,7 +11,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.inc.sada_pay_test.R
@@ -56,35 +55,24 @@ class HomeLoadingFragment : Fragment() {
 
         // viewModel.fetchRepositories()
 
-        // Start a coroutine in the lifecycle scope
         lifecycleScope.launch {
-            // repeatOnLifecycle launches the block in a new coroutine every time the
-            // lifecycle is in the STARTED state (or above) and cancels it when it's STOPPED.
-            repeatOnLifecycle(Lifecycle.State.CREATED) {
-                // Trigger the flow and start listening for values.
-                // Note that this happens when lifecycle is STARTED and stops
-                // collecting when the lifecycle is STOPPED
 
-                lifecycleScope.launch {
+            viewModel.uiState.collect {
 
-                    viewModel.uiState.collect {
-
-                        when (it) {
-                            is ApiState.Success -> {
-                                navigateToSuccessFragment()
-                            }
-                            is ApiState.Failure -> {
-                                navigateToFailureFragment()
-                            }
-                            else -> {
-                            }
-                        }
+                when (it) {
+                    is ApiState.Success -> {
+                        navigateToSuccessFragment()
+                    }
+                    is ApiState.Failure -> {
+                        navigateToFailureFragment()
+                    }
+                    else -> {
                     }
                 }
             }
-
         }
     }
+
 
     private fun navigateToFailureFragment() {
 

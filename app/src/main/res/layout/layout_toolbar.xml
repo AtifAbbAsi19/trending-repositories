@@ -32,15 +32,13 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
                     android:minHeight="?attr/actionBarSize"
-                    android:theme="?attr/actionBarTheme"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:title=""
-                    app:titleTextColor="#ffff" />
+                    style="@style/toolbarTheme"
+                    />
 
 
                 <com.google.android.material.textview.MaterialTextView
@@ -49,9 +47,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:text="@={viewModel.title}"
-                    android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold"
+                    style="@style/toolbarTheme"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/toolbar"
                     app:layout_constraintStart_toStartOf="parent"
@@ -77,6 +75,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
                     android:layout_marginEnd="9dp"
+                    style="@style/DottedImage"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"

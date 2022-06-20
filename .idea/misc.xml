@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="app/src/main/res/drawable/error_retry_button_background.xml" value="0.191" />
+        <entry key="app/src/main/res/drawable/ic_rounded_repositiory.xml" value="0.191" />
+        <entry key="app/src/main/res/drawable/rounded_shimmer.xml" value="0.191" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.2265625" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.2265625" />
+        <entry key="app/src/main/res/layout/fragment_home_failure.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_home_failurefragment.xml" value="0.2265625" />
+        <entry key="app/src/main/res/layout/fragment_home_loading.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/layout_toolbar.xml" value="0.2265625" />
+        <entry key="app/src/main/res/layout/repositiory_item_view.xml" value="0.2265625" />
+        <entry key="app/src/main/res/layout/row_shimmer_view.xml" value="0.22552083333333334" />
+        <entry key="app/src/main/res/menu/menu_main.xml" value="0.2265625" />
+        <entry key="app/src/main/res/xml/network_security_config.xml" value="0.22552083333333334" />
+      </map>
+    </option>
+  </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="ProjectRootManager" version="2" languageLevel="JDK_15_PREVIEW" project-jdk-name="15" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />

@@ -1,21 +1,28 @@
 package com.inc.sada_pay_test.ui.activity
 
+
+
+import android.R.menu
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.PopupMenu
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.findNavController
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import com.inc.sada_pay_test.R
 import com.inc.sada_pay_test.databinding.ActivityMainBinding
 import com.inc.sada_pay_test.viewmodel.HomeViewModel
 import com.inc.sada_pay_test.viewmodel.ToolbarViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -34,14 +41,20 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.toolbarViewModel = toolbarViewModel
         binding.lifecycleOwner = this
+        setupToolBar()
         init()
+    }
+
+    private fun setupToolBar() {
+
+        setSupportActionBar(binding.appBarLayout.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        supportActionBar?.title = ""
     }
 
 
     private fun init() {
         toolbarViewModel.title.postValue(getString(R.string.trending))
-
-
 
         binding.appBarLayout.settingBtnToolbar.setOnClickListener {
             showPopupMenu(it)
@@ -74,10 +87,21 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         super.onCreateOptionsMenu(menu)
-        // val popup = PopupMenu(this, menu)
-        menuInflater.inflate(R.menu.menu_main, menu)
+
+         menuInflater.inflate(R.menu.menu_main, menu)
+
+        lifecycleScope.launch {
+
+            val isDarkModeEnabled = toolbarViewModel.getDarkModeSetting().first()
+
+            menu?.findItem(R.id.dark_theme_btn)?.isChecked = isDarkModeEnabled
+
+            toolbarViewModel.isDarkModeEnabled.value = isDarkModeEnabled
+        }
+
         return true
     }
 
@@ -93,12 +117,35 @@ class MainActivity : AppCompatActivity() {
 
             R.id.dark_theme_btn -> {
                 item.isChecked = !item.isChecked
+                setupThemeMode(item.isChecked)
                 true
             }
             else -> {
                 super.onOptionsItemSelected(item)
             }
         }
+    }
+
+    private fun setupThemeMode(checked: Boolean) {
+
+
+        lifecycleScope.launch {
+            toolbarViewModel.saveDarkModeSetting(checked)
+        }
+
+        val mode = if (checked) {
+            AppCompatDelegate
+                .MODE_NIGHT_YES
+        } else {
+            AppCompatDelegate
+                .MODE_NIGHT_NO
+        }
+
+        AppCompatDelegate
+            .setDefaultNightMode(
+                mode
+            )
+
     }
 
     override fun onBackPressed() {
@@ -112,5 +159,4 @@ class MainActivity : AppCompatActivity() {
         }
         super.onDestroy()
     }
-
 }
