@@ -38,11 +38,23 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         // setContentView(R.layout.activity_main)
 
+        fetchDataFromCache()
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.toolbarViewModel = toolbarViewModel
         binding.lifecycleOwner = this
         setupToolBar()
         init()
+    }
+
+    private fun fetchDataFromCache() {
+
+        lifecycleScope.launch {
+
+            val isDarkModeEnabled = toolbarViewModel.getDarkModeSetting().first()
+            toolbarViewModel.isDarkModeEnabled.value = isDarkModeEnabled
+        }
+
     }
 
     private fun setupToolBar() {
@@ -65,12 +77,6 @@ class MainActivity : AppCompatActivity() {
             showPopupMenu(it)
         }
 
-
-        lifecycleScope.launch {
-
-            val isDarkModeEnabled = toolbarViewModel.getDarkModeSetting().first()
-            toolbarViewModel.isDarkModeEnabled.value = isDarkModeEnabled
-        }
 
         //setupNavigationGraph()
     }
