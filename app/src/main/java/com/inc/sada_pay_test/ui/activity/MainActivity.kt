@@ -1,7 +1,6 @@
 package com.inc.sada_pay_test.ui.activity
 
 
-
 import android.R.menu
 import android.os.Bundle
 import android.view.Menu
@@ -11,6 +10,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.PopupMenu
+import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
@@ -50,14 +50,26 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.appBarLayout.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
         supportActionBar?.title = ""
+        // binding.appBarLayout.toolbar.inflateMenu(R.menu.menu_main)
+        // setSupportActionBar(binding.appBarLayout.toolbar)
+
     }
 
 
     private fun init() {
         toolbarViewModel.title.postValue(getString(R.string.trending))
 
+
+
         binding.appBarLayout.settingBtnToolbar.setOnClickListener {
             showPopupMenu(it)
+        }
+
+
+        lifecycleScope.launch {
+
+            val isDarkModeEnabled = toolbarViewModel.getDarkModeSetting().first()
+            toolbarViewModel.isDarkModeEnabled.value = isDarkModeEnabled
         }
 
         //setupNavigationGraph()
@@ -78,7 +90,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun showPopupMenu(view: View) {
         PopupMenu(view.context, view).apply {
+
             menuInflater.inflate(R.menu.menu_main, menu)
+
+            menu.findItem(R.id.dark_theme_btn)?.isChecked =
+                toolbarViewModel.isDarkModeEnabled.value ?: false
+
             setOnMenuItemClickListener { item ->
                 onOptionsItemSelected(item)
                 true
@@ -87,27 +104,29 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    /*  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        super.onCreateOptionsMenu(menu)
+          //  menuInflater.inflate(R.menu.menu_main, menu)
 
-         menuInflater.inflate(R.menu.menu_main, menu)
+          lifecycleScope.launch {
 
-        lifecycleScope.launch {
+              val isDarkModeEnabled = toolbarViewModel.getDarkModeSetting().first()
 
-            val isDarkModeEnabled = toolbarViewModel.getDarkModeSetting().first()
+              menu?.findItem(R.id.dark_theme_btn)?.isChecked = isDarkModeEnabled
 
-            menu?.findItem(R.id.dark_theme_btn)?.isChecked = isDarkModeEnabled
+              toolbarViewModel.isDarkModeEnabled.value = isDarkModeEnabled
+          }
 
-            toolbarViewModel.isDarkModeEnabled.value = isDarkModeEnabled
-        }
+          return true
+          // return super.onCreateOptionsMenu(menu)
+      }*/
 
-        return true
-    }
-  /*  override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
 
-        val inflater = menuInflater
-        inflater.inflate(com.inc.sada_pay_test.R.menu.menu_main, menu)
+/*
+ override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+
+       // val inflater = menuInflater
+        //inflater.inflate(com.inc.sada_pay_test.R.menu.menu_main, menu)
 
         menuInflater.inflate(R.menu.menu_main, menu)
 
@@ -124,6 +143,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 */
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         return when (item.itemId) {
@@ -149,6 +169,7 @@ class MainActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             toolbarViewModel.saveDarkModeSetting(checked)
+            toolbarViewModel.isDarkModeEnabled.value = checked
         }
 
         val mode = if (checked) {
