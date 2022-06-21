@@ -59,8 +59,8 @@ class HomeFailureFragment : Fragment() {
             viewModel.uiState.collect {
 
                 when (it) {
-                    is ApiState.Success -> {
-                        navigateToSuccessFragment()
+                    is ApiState.Loading -> {
+                        navigateToLoadingScreen()
                     }
 
                     else -> {
@@ -70,6 +70,13 @@ class HomeFailureFragment : Fragment() {
         }
     }
 
+    private fun navigateToLoadingScreen() {
+
+        findNavController().apply {
+            navigate(R.id.loadingFragment)
+            backQueue.clear()
+        }
+    }
 
     private fun navigateToSuccessFragment() {
         findNavController().navigate(R.id.homeFragment)
